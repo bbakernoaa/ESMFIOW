@@ -121,34 +121,141 @@ jobs:
     - name: Build Software Stack
       if: steps.software-cache.outputs.cache-hit != 'true'
       run: |
-        echo "Installing ESMF library..."
+        echo "Building complete software stack from source..."
         
-        # Set ESMF version and paths
+        # Set up environment
+        export BUILD_DIR="$HOME/build"
+        export MPI_DIR="$HOME/mpi-install"
+        export HDF5_DIR="$HOME/hdf5-install"
+        export NETCDF_DIR="$HOME/netcdf-install"
+        export ESMF_DIR="$HOME/esmf-install"
+        
+        mkdir -p $BUILD_DIR
+        cd $BUILD_DIR
+        
+        # ================================================================
+        # Build OpenMPI
+        # ================================================================
+        echo "Building OpenMPI..."
+        OPENMPI_VERSION="4.1.6"
+        wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-${OPENMPI_VERSION}.tar.gz
+        tar -xzf openmpi-${OPENMPI_VERSION}.tar.gz
+        cd openmpi-${OPENMPI_VERSION}
+        
+        ./configure \
+          --prefix=$MPI_DIR \
+          --enable-mpi-fortran \
+          --enable-shared \
+          --disable-static \
+          CC=gcc \
+          CXX=g++ \
+          FC=gfortran
+        make -j$(nproc)
+        make install
+        
+        # Update PATH and environment
+        export PATH=$MPI_DIR/bin:$PATH
+        export LD_LIBRARY_PATH=$MPI_DIR/lib:$LD_LIBRARY_PATH
+        
+        cd $BUILD_DIR
+        
+        # ================================================================
+        # Build HDF5
+        # ================================================================
+        echo "Building HDF5..."
+        HDF5_VERSION="1.14.3"
+        wget https://github.com/HDFGroup/hdf5/releases/download/hdf5_${HDF5_VERSION//./_}/hdf5-${HDF5_VERSION}.tar.gz
+        tar -xzf hdf5-${HDF5_VERSION}.tar.gz
+        cd hdf5-${HDF5_VERSION}
+        
+        ./configure \
+          --prefix=$HDF5_DIR \
+          --enable-fortran \
+          --enable-parallel \
+          --enable-shared \
+          --disable-static \
+          CC=mpicc \
+          FC=mpifort
+        make -j$(nproc)
+        make install
+        
+        cd $BUILD_DIR
+        
+        # ================================================================
+        # Build NetCDF-C
+        # ================================================================
+        echo "Building NetCDF-C..."
+        NETCDF_VERSION="4.9.2"
+        wget https://github.com/Unidata/netcdf-c/archive/v${NETCDF_VERSION}.tar.gz
+        tar -xzf v${NETCDF_VERSION}.tar.gz
+        cd netcdf-c-${NETCDF_VERSION}
+        
+        mkdir build && cd build
+        cmake .. \
+          -DCMAKE_INSTALL_PREFIX=$NETCDF_DIR \
+          -DCMAKE_C_COMPILER=mpicc \
+          -DENABLE_HDF5=ON \
+          -DHDF5_ROOT=$HDF5_DIR \
+          -DENABLE_PARALLEL4=ON \
+          -DBUILD_SHARED_LIBS=ON \
+          -DBUILD_STATIC_LIBS=OFF
+        make -j$(nproc)
+        make install
+        
+        cd $BUILD_DIR
+        
+        # ================================================================
+        # Build NetCDF-Fortran
+        # ================================================================
+        echo "Building NetCDF-Fortran..."
+        NETCDF_FORTRAN_VERSION="4.6.1"
+        wget https://github.com/Unidata/netcdf-fortran/archive/v${NETCDF_FORTRAN_VERSION}.tar.gz
+        tar -xzf v${NETCDF_FORTRAN_VERSION}.tar.gz
+        cd netcdf-fortran-${NETCDF_FORTRAN_VERSION}
+        
+        # Set NetCDF environment
+        export NETCDF=$NETCDF_DIR
+        export LD_LIBRARY_PATH=$NETCDF_DIR/lib:$HDF5_DIR/lib:$LD_LIBRARY_PATH
+        export CPPFLAGS="-I$NETCDF_DIR/include -I$HDF5_DIR/include"
+        export LDFLAGS="-L$NETCDF_DIR/lib -L$HDF5_DIR/lib"
+        
+        ./configure \
+          --prefix=$NETCDF_DIR \
+          --enable-shared \
+          --disable-static \
+          CC=mpicc \
+          FC=mpifort
+        make -j$(nproc)
+        make install
+        
+        cd $BUILD_DIR
+        
+        # ================================================================
+        # Build ESMF
+        # ================================================================
+        echo "Building ESMF..."
         ESMF_VERSION="8.6.1"
-        ESMF_DIR="$HOME/esmf"
-        ESMF_INSTALL_DIR="$HOME/esmf-install"
-        
-        # Download and extract ESMF
-        cd $HOME
         wget https://github.com/esmf-org/esmf/archive/v${ESMF_VERSION}.tar.gz
         tar -xzf v${ESMF_VERSION}.tar.gz
-        mv esmf-${ESMF_VERSION} $ESMF_DIR
+        cd esmf-${ESMF_VERSION}
         
-        # Build ESMF
-        cd $ESMF_DIR
-        export ESMF_INSTALL_PREFIX=$ESMF_INSTALL_DIR
+        # Set ESMF build environment
+        export ESMF_INSTALL_PREFIX=$ESMF_DIR
         export ESMF_COMM=openmpi
         export ESMF_COMPILER=gfortran
         export ESMF_NETCDF=1
-        export ESMF_NETCDF_INCLUDE="/usr/include"
-        export ESMF_NETCDF_LIBPATH="/usr/lib/x86_64-linux-gnu"
+        export ESMF_NETCDF_INCLUDE="$NETCDF_DIR/include"
+        export ESMF_NETCDF_LIBPATH="$NETCDF_DIR/lib"
         export ESMF_HDF5=1
-        export ESMF_HDF5_INCLUDE="/usr/include/hdf5/serial"
-        export ESMF_HDF5_LIBPATH="/usr/lib/x86_64-linux-gnu/hdf5/serial"
+        export ESMF_HDF5_INCLUDE="$HDF5_DIR/include"
+        export ESMF_HDF5_LIBPATH="$HDF5_DIR/lib"
+        export ESMF_MPIRUN=mpirun
         
-        # Build and install
+        # Build and install ESMF
         make -j$(nproc)
         make install
+        
+        echo "Software stack build completed!"
         
     - name: Setup Software Environment
       run: |

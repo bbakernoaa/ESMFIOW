@@ -1,0 +1,32 @@
+name = "esmfiow"
+version = "0.1.0"
+license = "MIT"
+author = "Your Name"
+maintainer = "your.email@example.com"
+copyright = "2025 Your Name"
+description = "Fortran library wrapping ESMF I/O capabilities with netCDF CF convention support"
+
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+
+[dependencies]
+# Add ESMF and netCDF dependencies here
+# These will need to be configured based on your system setup
+
+[fortran]
+implicit-typing = false
+implicit-external = false
+
+[[executable]]
+name = "esmfiow_example"
+source-dir = "example"
+main = "example.f90"
+
+[[test]]
+name = "test_esmfiow"
+source-dir = "test"
+
+[install]
+library = true

@@ -1,0 +1,86 @@
+/**
+ * @page parallel_io_page Parallel I/O Capabilities
+ *
+ * @tableofcontents
+ *
+ * @section parallel_overview Overview
+ *
+ * The ESMFIOW library provides comprehensive parallel I/O capabilities through integration
+ * with the Earth System Modeling Framework (ESMF) and NetCDF4. This integration allows for
+ * efficient parallel reading and writing of data with compression enabled.
+ *
+ * @section parallel_features Key Features
+ *
+ * - Parallel file creation and access through ESMF I/O infrastructure
+ * - NetCDF4 compression applied to parallel I/O operations
+ * - Optimized chunking for different access patterns in parallel environments
+ * - Support for different I/O strategies (NetCDF4, PNetCDF)
+ * - Performance benchmarking tools to compare sequential and parallel I/O
+ *
+ * @section parallel_api API Reference
+ *
+ * The key functions for parallel I/O are:
+ *
+ * - esmfiow_nc4_create_parallel_file() - Creates a NetCDF4 file with parallel access
+ * - esmfiow_esmf_io_write_field() - Writes an ESMF field with compression options
+ * - esmfiow_esmf_io_read_field() - Reads an ESMF field with parallel access
+ *
+ * @section parallel_examples Examples
+ *
+ * @subsection parallel_example_simple Simple Parallel I/O Example
+ *
+ * Here's a simplified example of using parallel I/O with ESMFIOW:
+ *
+ * @code{.f90}
+ * program simple_parallel_io
+ *     use esmfiow_constants
+ *     use esmfiow_esmf_io
+ *     use ESMF
+ *
+ *     type(esmfiow_esmf_io_config) :: io_config
+ *     type(ESMF_Field) :: field
+ *     integer :: rc
+ *
+ *     ! Initialize ESMF
+ *     call ESMF_Initialize(rc=rc)
+ *
+ *     ! Create I/O configuration
+ *     call esmfiow_esmf_create_io_config(io_config, "output.nc", rc=rc)
+ *     io_config%is_parallel = .true.
+ *
+ *     ! Set compression parameters
+ *     io_config%compression%compression_type = ESMFIOW_NC4_COMPRESSION_DEFLATE
+ *     io_config%compression%deflate_level = 5
+ *     io_config%compression%shuffle = .true.
+ *
+ *     ! Write field with parallel I/O and compression
+ *     call esmfiow_esmf_io_write_field(io_config, field, rc=rc)
+ *
+ *     ! Finalize
+ *     call ESMF_Finalize(rc=rc)
+ * end program
+ * @endcode
+ *
+ * @subsection parallel_example_advanced Advanced Example
+ *
+ * For a more complete example, see the parallel_compression_example.f90 file that includes
+ * benchmarking between sequential and parallel performance.
+ *
+ * @section parallel_perf Performance Considerations
+ *
+ * When using parallel I/O with compression, consider the following performance aspects:
+ *
+ * - Compression level: Higher levels provide better compression but slower performance
+ * - Chunking strategy: Affects parallel access patterns and performance
+ * - Number of processors: More processors can improve I/O performance but with diminishing returns
+ * - Data structure: Regular data patterns typically compress better
+ *
+ * @section parallel_troubleshooting Troubleshooting
+ *
+ * Common issues with parallel I/O:
+ *
+ * - File locking problems: Check your NetCDF configuration and file system capabilities
+ * - Metadata contention: In parallel writes, metadata operations can become a bottleneck
+ * - Load balancing: Uneven data distribution can affect parallel performance
+ *
+ */

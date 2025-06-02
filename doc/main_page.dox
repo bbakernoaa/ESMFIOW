@@ -1,0 +1,126 @@
+/**
+ * @mainpage ESMFIOW Documentation
+ *
+ * @section intro_sec Introduction
+ *
+ * The Earth System Model Framework I/O Wrapper (ESMFIOW) library provides a comprehensive
+ * interface for handling I/O operations in Earth System Models, with a focus on NetCDF4
+ * compression capabilities and integration with the Earth System Modeling Framework (ESMF).
+ *
+ * ESMFIOW simplifies complex I/O operations while providing advanced compression and
+ * optimization features essential for efficient data storage and retrieval in large-scale
+ * Earth system simulations.
+ *
+ * @section features_sec Key Features
+ *
+ * - **NetCDF4 Compression**: Advanced compression with deflate, szip, and other algorithms
+ * - **ESMF Integration**: Seamless integration with ESMF I/O infrastructure
+ * - **Parallel I/O**: Support for both sequential and parallel I/O operations
+ * - **CF Compliance**: Full support for Climate and Forecast metadata conventions
+ * - **Chunking Optimization**: Advanced chunking strategies for different access patterns
+ * - **Error Handling**: Comprehensive error handling and diagnostic capabilities
+ * - **Structured Programming**: Modern Fortran with structured error handling (no goto statements)
+ *
+ * @section architecture_sec Architecture
+ *
+ * ESMFIOW is designed with a modular architecture that separates concerns:
+ *
+ * - **Core Layer**: Constants, basic types, and utility functions
+ * - **I/O Layer**: File operations, field I/O, and grid handling
+ * - **Compression Layer**: NetCDF4-specific optimization and compression
+ * - **ESMF Layer**: Integration with ESMF framework for parallel operations
+ * - **CF Layer**: Climate and Forecast convention utilities
+ *
+ * @section parallel_io Parallel I/O Capabilities
+ *
+ * ESMFIOW provides robust parallel I/O capabilities through integration with ESMF and
+ * NetCDF4. The library automatically detects parallel execution environments and
+ * optimizes I/O operations accordingly. For detailed information about parallel I/O
+ * functionality, see @ref parallel_io_page.
+ *
+ * Key parallel features:
+ * - Automatic parallel environment detection
+ * - Optimized chunking for parallel access
+ * - MPI-based collective I/O operations
+ * - Load balancing for large datasets
+ *
+ * @section modules_sec Library Modules
+ *
+ * - @ref esmfiow "Main Module" - Primary interface and exported functionality
+ * - @ref esmfiow_constants "Constants Module" - Core constants and configuration parameters
+ * - @ref esmfiow_netcdf4 "NetCDF4 Module" - NetCDF4 compression and optimization functionality
+ * - @ref esmfiow_esmf_io "ESMF I/O Module" - Integration with ESMF I/O infrastructure
+ * - @ref esmfiow_io "I/O Module" - General file and data I/O operations
+ * - @ref esmfiow_grid "Grid Module" - Grid definition and coordinate handling
+ * - @ref esmfiow_field "Field Module" - Field data management and metadata
+ * - @ref esmfiow_cf_utils "CF Utilities" - Climate and Forecast conventions compliance
+ *
+ * @section getting_started Getting Started
+ *
+ * To use ESMFIOW in your Fortran application:
+ *
+ * 1. **Initialize the library**:
+ *    ```fortran
+ *    use esmfiow
+ *    integer :: rc
+ *    call esmfiow_initialize(rc)
+ *    ```
+ *
+ * 2. **Create a file with compression**:
+ *    ```fortran
+ *    type(esmfiow_file_handle) :: file_handle
+ *    call esmfiow_file_create("output.nc", file_handle, &
+ *                           title="My Dataset", rc=rc)
+ *    ```
+ *
+ * 3. **Write field data**:
+ *    ```fortran
+ *    call esmfiow_write_field(file_handle, my_field, "temperature", rc)
+ *    ```
+ *
+ * 4. **Clean up**:
+ *    ```fortran
+ *    call esmfiow_file_close(file_handle, rc)
+ *    call esmfiow_finalize(rc)
+ *    ```
+ *
+ * @section examples_sec Examples
+ *
+ * The library includes comprehensive examples demonstrating various features:
+ *
+ * - @ref example.f90 "Basic Example" - Introduction to ESMFIOW basic usage
+ * - @ref parallel_compression_example.f90 "Parallel Compression" - Parallel I/O with compression
+ * - @ref grid_example.f90 "Grid Handling" - Working with coordinate grids
+ * - @ref cf_example.f90 "CF Conventions" - Climate and Forecast metadata compliance
+ *
+ * @section performance_sec Performance Considerations
+ *
+ * ESMFIOW is optimized for performance in Earth system modeling contexts:
+ *
+ * - **Compression vs Speed**: Configurable compression levels balance file size and I/O speed
+ * - **Chunking Strategies**: Automatic optimization for sequential vs random access patterns
+ * - **Parallel Scaling**: Efficient scaling to hundreds of processes
+ * - **Memory Management**: Optimized memory usage for large datasets
+ *
+ * @section compatibility_sec Compatibility
+ *
+ * - **Fortran Standard**: Modern Fortran (2008+) with structured programming practices
+ * - **ESMF Version**: Compatible with ESMF 8.6.0 and later
+ * - **NetCDF**: Requires NetCDF4 with HDF5 support
+ * - **MPI**: Compatible with standard MPI implementations
+ * - **CF Conventions**: Supports CF-1.8 metadata conventions
+ *
+ * @section license_sec License
+ *
+ * ESMFIOW is distributed under an open-source license. See the LICENSE file
+ * in the source distribution for details.
+ *
+ * @section support_sec Support and Development
+ *
+ * For support, bug reports, and feature requests, please visit the project
+ * repository or contact the development team.
+ *
+ * @author ESMFIOW Development Team
+ * @version 1.0.0
+ * @date June 2025
+ */

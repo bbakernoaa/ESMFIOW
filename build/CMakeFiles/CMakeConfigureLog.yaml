@@ -1,0 +1,349 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      The system is: Darwin - 23.6.0 - arm64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineFortranCompiler.cmake:190 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the Fortran compiler identification source file "CMakeFortranCompilerId.F" succeeded.
+      Compiler: /Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran 
+      Build flags: -march=armv8.3-a;-ftree-vectorize;-fPIC;-fno-stack-protector;-O2;-pipe;-isystem;/Users/l22-n04127-res/miniforge3/envs/dev/include
+      Id flags: -v 
+      
+      The output was:
+      0
+      Driving: /Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran -march=armv8.3-a -ftree-vectorize -fPIC -fno-stack-protector -O2 -pipe -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include -v CMakeFortranCompilerId.F --sysroot=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -mmacosx-version-min=14.0.0 -asm_macosx_version_min=14.0 -nodefaultexport -l gfortran
+      Using built-in specs.
+      COLLECT_GCC=/Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran
+      COLLECT_LTO_WRAPPER=/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/lto-wrapper
+      Target: arm64-apple-darwin20.0.0
+      Configured with: ../configure --prefix=/Users/l22-n04127-res/miniforge3/envs/dev --build=x86_64-apple-darwin13.4.0 --host=arm64-apple-darwin20.0.0 --target=arm64-apple-darwin20.0.0 --with-libiconv-prefix=/Users/l22-n04127-res/miniforge3/envs/dev --enable-languages=fortran --disable-multilib --enable-checking=release --disable-bootstrap --disable-libssp --with-gmp=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpfr=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpc=/Users/l22-n04127-res/miniforge3/envs/dev --with-isl=/Users/l22-n04127-res/miniforge3/envs/dev --enable-darwin-at-rpath
+      Thread model: posix
+      Supported LTO compression algorithms: zlib
+      gcc version 13.2.0 (GCC) 
+      COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-pipe' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-v' '--sysroot=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-mmacosx-version-min=14.0.0'  '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'a-'
+       /Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/f951 CMakeFortranCompilerId.F -ffixed-form -cpp=/var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccU1acWm.f90 -quiet -v -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -D__DYNAMIC__ -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include CMakeFortranCompilerId.F -fPIC -quiet -dumpdir a- -dumpbase CMakeFortranCompilerId.F -dumpbase-ext .F -march=armv8.3-a -mmacosx-version-min=14.0.0 -mlittle-endian -mabi=lp64 -O2 -version -ftree-vectorize -fPIC -fno-stack-protector -fintrinsic-modules-path /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude -o - |
+       /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/as -arch arm64 -v -mmacosx-version-min=14.0 -o /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//cccGUOWa.o
+      GNU Fortran (GCC) version 13.2.0 (arm64-apple-darwin20.0.0)
+      	compiled by GNU C version Clang 15.0.7, GMP version 6.2.1, MPFR version 4.2.0, MPC version 1.3.1, isl version isl-0.25-IMath-32
+      
+      warning: MPFR header version 4.2.0 differs from library version 4.2.1.
+      GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+      ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
+      ignoring nonexistent directory "/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../../../arm64-apple-darwin20.0.0/include"
+      ignoring duplicate directory "/Users/l22-n04127-res/miniforge3/envs/dev/include"
+        as it is a non-system directory that duplicates a system directory
+      #include "..." search starts here:
+      #include <...> search starts here:
+       /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude
+       /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include
+       /Users/l22-n04127-res/miniforge3/envs/dev/include
+       /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include-fixed
+       /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+      End of search list.
+      clang version 14.0.6
+      Target: arm64-apple-darwin23.6.0
+      Thread model: posix
+      InstalledDir: /Users/l22-n04127-res/miniforge3/envs/dev/bin
+       (in-process)
+       "/Users/l22-n04127-res/miniforge3/envs/dev/bin/clang-14" -cc1as -triple arm64-apple-macosx14.0.0 -filetype obj -main-file-name - -target-cpu apple-m1 -target-feature +v8.5a -target-feature +fp-armv8 -target-feature +neon -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp16fml -target-feature +ras -target-feature +lse -target-feature +rdm -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sha2 -target-feature +aes -fdebug-compilation-dir=/Users/l22-n04127-res/Documents/GitHub/ESMFIOW/build/CMakeFiles/4.0.2/CompilerIdFortran -dwarf-debug-producer "clang version 14.0.6" -dwarf-version=4 -mrelocation-model pic --mrelax-relocations -o /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//cccGUOWa.o -
+      Reading specs from /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/libgfortran.spec
+      rename spec lib to liborig
+      COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-pipe' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-v' '--sysroot=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-mmacosx-version-min=14.0.0'  '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'a-'
+      COMPILER_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/
+      LIBRARY_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../../
+      COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-pipe' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-v' '--sysroot=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-mmacosx-version-min=14.0.0'  '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'a.'
+       /Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/collect2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/ -dynamic -arch arm64 -macosx_version_min 14.0.0 -o a.out -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../.. /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//cccGUOWa.o -lgfortran -lemutls_w -lgcc -lquadmath -lm -lemutls_w -lgcc -lSystem -lgcc -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -no_compact_unwind -rpath @loader_path -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib
+      
+      
+      Compilation of the Fortran compiler identification source "CMakeFortranCompilerId.F" produced "a.out"
+      
+      The Fortran compiler identification is GNU, found in:
+        /Users/l22-n04127-res/Documents/GitHub/ESMFIOW/build/CMakeFiles/4.0.2/CompilerIdFortran/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting Fortran compiler ABI info"
+    directories:
+      source: "/Users/l22-n04127-res/Documents/GitHub/ESMFIOW/build/CMakeFiles/CMakeScratch/TryCompile-wEGG8D"
+      binary: "/Users/l22-n04127-res/Documents/GitHub/ESMFIOW/build/CMakeFiles/CMakeScratch/TryCompile-wEGG8D"
+    cmakeVariables:
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-pie -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/l22-n04127-res/miniforge3/envs/dev/lib -L/Users/l22-n04127-res/miniforge3/envs/dev/lib"
+      CMAKE_Fortran_FLAGS: "-march=armv8.3-a -ftree-vectorize -fPIC -fno-stack-protector -O2 -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include"
+      CMAKE_Fortran_FLAGS_DEBUG: "-g"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+    buildResult:
+      variable: "CMAKE_Fortran_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/l22-n04127-res/Documents/GitHub/ESMFIOW/build/CMakeFiles/CMakeScratch/TryCompile-wEGG8D'
+        
+        Run Build Command(s): /Users/l22-n04127-res/miniforge3/envs/dev/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_670ee/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_670ee.dir/build.make CMakeFiles/cmTC_670ee.dir/build
+        Building Fortran object CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o
+        /Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran   -march=armv8.3-a -ftree-vectorize -fPIC -fno-stack-protector -O2 -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk   -v -Wl,-v -c /Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeFortranCompilerABI.F90 -o CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o
+        Using built-in specs.
+        COLLECT_GCC=/Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran
+        Target: arm64-apple-darwin20.0.0
+        Configured with: ../configure --prefix=/Users/l22-n04127-res/miniforge3/envs/dev --build=x86_64-apple-darwin13.4.0 --host=arm64-apple-darwin20.0.0 --target=arm64-apple-darwin20.0.0 --with-libiconv-prefix=/Users/l22-n04127-res/miniforge3/envs/dev --enable-languages=fortran --disable-multilib --enable-checking=release --disable-bootstrap --disable-libssp --with-gmp=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpfr=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpc=/Users/l22-n04127-res/miniforge3/envs/dev --with-isl=/Users/l22-n04127-res/miniforge3/envs/dev --enable-darwin-at-rpath
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 13.2.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-v' '-c' '-o' 'CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o' '-mmacosx-version-min=14.0.0' '-asm_macosx_version_min=14.0' '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_670ee.dir/'
+         /Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/f951 /Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeFortranCompilerABI.F90 -cpp=/var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccwqU7CU.f90 -quiet -v -D__DYNAMIC__ -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk /Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeFortranCompilerABI.F90 -fPIC -quiet -dumpdir CMakeFiles/cmTC_670ee.dir/ -dumpbase CMakeFortranCompilerABI.F90.F90 -dumpbase-ext .F90 -march=armv8.3-a -mmacosx-version-min=14.0.0 -mlittle-endian -mabi=lp64 -O2 -version -ftree-vectorize -fPIC -fno-stack-protector -fintrinsic-modules-path /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude -o /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccHNLvtq.s
+        GNU Fortran (GCC) version 13.2.0 (arm64-apple-darwin20.0.0)
+        	compiled by GNU C version Clang 15.0.7, GMP version 6.2.1, MPFR version 4.2.0, MPC version 1.3.1, isl version isl-0.25-IMath-32
+        
+        warning: MPFR header version 4.2.0 differs from library version 4.2.1.
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
+        ignoring nonexistent directory "/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../../../arm64-apple-darwin20.0.0/include"
+        ignoring duplicate directory "/Users/l22-n04127-res/miniforge3/envs/dev/include"
+          as it is a non-system directory that duplicates a system directory
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude
+         /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include
+         /Users/l22-n04127-res/miniforge3/envs/dev/include
+         /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include-fixed
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+        End of search list.
+        COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-v' '-c' '-o' 'CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o' '-mmacosx-version-min=14.0.0'  '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_670ee.dir/'
+         /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/as -arch arm64 -v -mmacosx-version-min=14.0 -o CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccHNLvtq.s
+        clang version 14.0.6
+        Target: arm64-apple-darwin23.6.0
+        Thread model: posix
+        InstalledDir: /Users/l22-n04127-res/miniforge3/envs/dev/bin
+         (in-process)
+         "/Users/l22-n04127-res/miniforge3/envs/dev/bin/clang-14" -cc1as -triple arm64-apple-macosx14.0.0 -filetype obj -main-file-name ccHNLvtq.s -target-cpu apple-m1 -target-feature +v8.5a -target-feature +fp-armv8 -target-feature +neon -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp16fml -target-feature +ras -target-feature +lse -target-feature +rdm -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sha2 -target-feature +aes -fdebug-compilation-dir=/Users/l22-n04127-res/Documents/GitHub/ESMFIOW/build/CMakeFiles/CMakeScratch/TryCompile-wEGG8D -dwarf-debug-producer "clang version 14.0.6" -dwarf-version=4 -mrelocation-model pic --mrelax-relocations -o CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccHNLvtq.s
+        COMPILER_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/
+        LIBRARY_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../../
+        COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-v' '-c' '-o' 'CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o' '-mmacosx-version-min=14.0.0'  '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.'
+        Linking Fortran executable cmTC_670ee
+        /Users/l22-n04127-res/miniforge3/envs/dev/bin/cmake -E cmake_link_script CMakeFiles/cmTC_670ee.dir/link.txt --verbose=1
+        Driving: /Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran -Wl,-pie -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/l22-n04127-res/miniforge3/envs/dev/lib -L/Users/l22-n04127-res/miniforge3/envs/dev/lib -v -Wl,-v -march=armv8.3-a -ftree-vectorize -fPIC -fno-stack-protector -O2 -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o -o cmTC_670ee -mmacosx-version-min=14.0.0 -asm_macosx_version_min=14.0 -nodefaultexport -l gfortran
+        Using built-in specs.
+        COLLECT_GCC=/Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran
+        COLLECT_LTO_WRAPPER=/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/lto-wrapper
+        Target: arm64-apple-darwin20.0.0
+        Configured with: ../configure --prefix=/Users/l22-n04127-res/miniforge3/envs/dev --build=x86_64-apple-darwin13.4.0 --host=arm64-apple-darwin20.0.0 --target=arm64-apple-darwin20.0.0 --with-libiconv-prefix=/Users/l22-n04127-res/miniforge3/envs/dev --enable-languages=fortran --disable-multilib --enable-checking=release --disable-bootstrap --disable-libssp --with-gmp=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpfr=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpc=/Users/l22-n04127-res/miniforge3/envs/dev --with-isl=/Users/l22-n04127-res/miniforge3/envs/dev --enable-darwin-at-rpath
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 13.2.0 (GCC) 
+        Reading specs from /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/libgfortran.spec
+        rename spec lib to liborig
+        COLLECT_GCC_OPTIONS='-L/Users/l22-n04127-res/miniforge3/envs/dev/lib' '-v' '-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-o' 'cmTC_670ee' '-mmacosx-version-min=14.0.0' '-asm_macosx_version_min=14.0' '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_670ee-'
+        COMPILER_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/
+        LIBRARY_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../../
+        COLLECT_GCC_OPTIONS='-L/Users/l22-n04127-res/miniforge3/envs/dev/lib' '-v' '-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-o' 'cmTC_670ee' '-mmacosx-version-min=14.0.0' '-asm_macosx_version_min=14.0' '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_670ee.'
+         /Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/collect2 -dynamic -arch arm64 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -macosx_version_min 14.0.0 -o cmTC_670ee -L/Users/l22-n04127-res/miniforge3/envs/dev/lib -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../.. -pie -headerpad_max_install_names -dead_strip_dylibs -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -v CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lemutls_w -lgcc -lquadmath -lm -lemutls_w -lgcc -lSystem -lgcc -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -no_compact_unwind -rpath @loader_path -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib
+        collect2 version 13.2.0
+        /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/ld -dynamic -arch arm64 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -macosx_version_min 14.0.0 -o cmTC_670ee -L/Users/l22-n04127-res/miniforge3/envs/dev/lib -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../.. -pie -headerpad_max_install_names -dead_strip_dylibs -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -v CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lemutls_w -lgcc -lquadmath -lm -lemutls_w -lgcc -lSystem -lgcc -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -no_compact_unwind -rpath @loader_path -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib
+        @(#)PROGRAM:ld  PROJECT:ld64-530
+        BUILD 07:38:32 Sep  7 2022
+        configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em (tvOS)
+        Library search paths:
+        	/Users/l22-n04127-res/miniforge3/envs/dev/lib
+        	/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0
+        	/Users/l22-n04127-res/miniforge3/envs/dev/lib
+        	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib
+        Framework search paths:
+        	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/
+        /Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran -Wl,-pie -Wl,-headerpad_max_install_names -Wl,-dead_strip_dylibs -Wl,-rpath,/Users/l22-n04127-res/miniforge3/envs/dev/lib -L/Users/l22-n04127-res/miniforge3/envs/dev/lib -v -Wl,-v -march=armv8.3-a -ftree-vectorize -fPIC -fno-stack-protector -O2 -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o -o cmTC_670ee
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:122 (message)"
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Effective list of requested architectures (possibly empty)  : ""
+      Effective list of architectures found in the ABI info binary: "arm64"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:191 (message)"
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed Fortran implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude]
+          add: [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include]
+          add: [/Users/l22-n04127-res/miniforge3/envs/dev/include]
+          add: [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include-fixed]
+          add: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include]
+        end of search list found
+        collapse include dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude]
+        collapse include dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include]
+        collapse include dir [/Users/l22-n04127-res/miniforge3/envs/dev/include] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/include]
+        collapse include dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include-fixed] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include-fixed]
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include]
+        implicit include dirs: [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude;/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include;/Users/l22-n04127-res/miniforge3/envs/dev/include;/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include-fixed;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed Fortran implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/Users/l22-n04127-res/Documents/GitHub/ESMFIOW/build/CMakeFiles/CMakeScratch/TryCompile-wEGG8D']
+        ignore line: []
+        ignore line: [Run Build Command(s): /Users/l22-n04127-res/miniforge3/envs/dev/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_670ee/fast]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_670ee.dir/build.make CMakeFiles/cmTC_670ee.dir/build]
+        ignore line: [Building Fortran object CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o]
+        ignore line: [/Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran   -march=armv8.3-a -ftree-vectorize -fPIC -fno-stack-protector -O2 -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk   -v -Wl -v -c /Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeFortranCompilerABI.F90 -o CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran]
+        ignore line: [Target: arm64-apple-darwin20.0.0]
+        ignore line: [Configured with: ../configure --prefix=/Users/l22-n04127-res/miniforge3/envs/dev --build=x86_64-apple-darwin13.4.0 --host=arm64-apple-darwin20.0.0 --target=arm64-apple-darwin20.0.0 --with-libiconv-prefix=/Users/l22-n04127-res/miniforge3/envs/dev --enable-languages=fortran --disable-multilib --enable-checking=release --disable-bootstrap --disable-libssp --with-gmp=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpfr=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpc=/Users/l22-n04127-res/miniforge3/envs/dev --with-isl=/Users/l22-n04127-res/miniforge3/envs/dev --enable-darwin-at-rpath]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-v' '-c' '-o' 'CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o' '-mmacosx-version-min=14.0.0' '-asm_macosx_version_min=14.0' '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_670ee.dir/']
+        ignore line: [ /Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/f951 /Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeFortranCompilerABI.F90 -cpp=/var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccwqU7CU.f90 -quiet -v -D__DYNAMIC__ -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk /Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeFortranCompilerABI.F90 -fPIC -quiet -dumpdir CMakeFiles/cmTC_670ee.dir/ -dumpbase CMakeFortranCompilerABI.F90.F90 -dumpbase-ext .F90 -march=armv8.3-a -mmacosx-version-min=14.0.0 -mlittle-endian -mabi=lp64 -O2 -version -ftree-vectorize -fPIC -fno-stack-protector -fintrinsic-modules-path /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude -o /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccHNLvtq.s]
+        ignore line: [GNU Fortran (GCC) version 13.2.0 (arm64-apple-darwin20.0.0)]
+        ignore line: [	compiled by GNU C version Clang 15.0.7  GMP version 6.2.1  MPFR version 4.2.0  MPC version 1.3.1  isl version isl-0.25-IMath-32]
+        ignore line: []
+        ignore line: [warning: MPFR header version 4.2.0 differs from library version 4.2.1.]
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../../../arm64-apple-darwin20.0.0/include"]
+        ignore line: [ignoring duplicate directory "/Users/l22-n04127-res/miniforge3/envs/dev/include"]
+        ignore line: [  as it is a non-system directory that duplicates a system directory]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/finclude]
+        ignore line: [ /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include]
+        ignore line: [ /Users/l22-n04127-res/miniforge3/envs/dev/include]
+        ignore line: [ /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/include-fixed]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-v' '-c' '-o' 'CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o' '-mmacosx-version-min=14.0.0'  '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_670ee.dir/']
+        ignore line: [ /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/as -arch arm64 -v -mmacosx-version-min=14.0 -o CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccHNLvtq.s]
+        ignore line: [clang version 14.0.6]
+        ignore line: [Target: arm64-apple-darwin23.6.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Users/l22-n04127-res/miniforge3/envs/dev/bin]
+        ignore line: [ (in-process)]
+        ignore line: [ "/Users/l22-n04127-res/miniforge3/envs/dev/bin/clang-14" -cc1as -triple arm64-apple-macosx14.0.0 -filetype obj -main-file-name ccHNLvtq.s -target-cpu apple-m1 -target-feature +v8.5a -target-feature +fp-armv8 -target-feature +neon -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp16fml -target-feature +ras -target-feature +lse -target-feature +rdm -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sha2 -target-feature +aes -fdebug-compilation-dir=/Users/l22-n04127-res/Documents/GitHub/ESMFIOW/build/CMakeFiles/CMakeScratch/TryCompile-wEGG8D -dwarf-debug-producer "clang version 14.0.6" -dwarf-version=4 -mrelocation-model pic --mrelax-relocations -o CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o /var/folders/xp/njn94xzx5935xt75z5jt42hc0000gp/T//ccHNLvtq.s]
+        ignore line: [COMPILER_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/]
+        ignore line: [LIBRARY_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../../]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-v' '-c' '-o' 'CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o' '-mmacosx-version-min=14.0.0'  '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.']
+        ignore line: [Linking Fortran executable cmTC_670ee]
+        ignore line: [/Users/l22-n04127-res/miniforge3/envs/dev/bin/cmake -E cmake_link_script CMakeFiles/cmTC_670ee.dir/link.txt --verbose=1]
+        ignore line: [Driving: /Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran -Wl -pie -Wl -headerpad_max_install_names -Wl -dead_strip_dylibs -Wl -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -L/Users/l22-n04127-res/miniforge3/envs/dev/lib -v -Wl -v -march=armv8.3-a -ftree-vectorize -fPIC -fno-stack-protector -O2 -isystem /Users/l22-n04127-res/miniforge3/envs/dev/include -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o -o cmTC_670ee -mmacosx-version-min=14.0.0 -asm_macosx_version_min=14.0 -nodefaultexport -l gfortran]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/Users/l22-n04127-res/miniforge3/envs/dev/bin/arm64-apple-darwin20.0.0-gfortran]
+        ignore line: [COLLECT_LTO_WRAPPER=/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/lto-wrapper]
+        ignore line: [Target: arm64-apple-darwin20.0.0]
+        ignore line: [Configured with: ../configure --prefix=/Users/l22-n04127-res/miniforge3/envs/dev --build=x86_64-apple-darwin13.4.0 --host=arm64-apple-darwin20.0.0 --target=arm64-apple-darwin20.0.0 --with-libiconv-prefix=/Users/l22-n04127-res/miniforge3/envs/dev --enable-languages=fortran --disable-multilib --enable-checking=release --disable-bootstrap --disable-libssp --with-gmp=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpfr=/Users/l22-n04127-res/miniforge3/envs/dev --with-mpc=/Users/l22-n04127-res/miniforge3/envs/dev --with-isl=/Users/l22-n04127-res/miniforge3/envs/dev --enable-darwin-at-rpath]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [Reading specs from /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/libgfortran.spec]
+        ignore line: [rename spec lib to liborig]
+        ignore line: [COLLECT_GCC_OPTIONS='-L/Users/l22-n04127-res/miniforge3/envs/dev/lib' '-v' '-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-o' 'cmTC_670ee' '-mmacosx-version-min=14.0.0' '-asm_macosx_version_min=14.0' '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_670ee-']
+        ignore line: [COMPILER_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/]
+        ignore line: [LIBRARY_PATH=/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/:/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../../]
+        ignore line: [COLLECT_GCC_OPTIONS='-L/Users/l22-n04127-res/miniforge3/envs/dev/lib' '-v' '-march=armv8.3-a' '-ftree-vectorize' '-fPIC' '-fno-stack-protector' '-O2' '-isystem' '/Users/l22-n04127-res/miniforge3/envs/dev/include' '-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk' '-o' 'cmTC_670ee' '-mmacosx-version-min=14.0.0' '-asm_macosx_version_min=14.0' '-nodefaultexport' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_670ee.']
+        link line: [ /Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/collect2 -dynamic -arch arm64 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -macosx_version_min 14.0.0 -o cmTC_670ee -L/Users/l22-n04127-res/miniforge3/envs/dev/lib -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../.. -pie -headerpad_max_install_names -dead_strip_dylibs -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -v CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lemutls_w -lgcc -lquadmath -lm -lemutls_w -lgcc -lSystem -lgcc -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -no_compact_unwind -rpath @loader_path -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib]
+          arg [/Users/l22-n04127-res/miniforge3/envs/dev/libexec/gcc/arm64-apple-darwin20.0.0/13.2.0/collect2] ==> ignore
+          arg [-dynamic] ==> ignore
+          arg [-arch] ==> ignore
+          arg [arm64] ==> ignore
+          arg [-syslibroot] ==> ignore
+          arg [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk] ==> ignore
+          arg [-macosx_version_min] ==> ignore
+          arg [14.0.0] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_670ee] ==> ignore
+          arg [-L/Users/l22-n04127-res/miniforge3/envs/dev/lib] ==> dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib]
+          arg [-L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0] ==> dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0]
+          arg [-L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../..] ==> dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../..]
+          arg [-pie] ==> ignore
+          arg [-headerpad_max_install_names] ==> ignore
+          arg [-dead_strip_dylibs] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/Users/l22-n04127-res/miniforge3/envs/dev/lib] ==> ignore
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o] ==> ignore
+          arg [-lgfortran] ==> lib [gfortran]
+          arg [-lemutls_w] ==> lib [emutls_w]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lquadmath] ==> lib [quadmath]
+          arg [-lm] ==> lib [m]
+          arg [-lemutls_w] ==> lib [emutls_w]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lSystem] ==> lib [System]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-rpath] ==> ignore
+          arg [/Users/l22-n04127-res/miniforge3/envs/dev/lib] ==> ignore
+          arg [-no_compact_unwind] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [@loader_path] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/Users/l22-n04127-res/miniforge3/envs/dev/lib] ==> ignore
+        ignore line: [collect2 version 13.2.0]
+        ignore line: [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/ld -dynamic -arch arm64 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -macosx_version_min 14.0.0 -o cmTC_670ee -L/Users/l22-n04127-res/miniforge3/envs/dev/lib -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -L/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../.. -pie -headerpad_max_install_names -dead_strip_dylibs -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -v CMakeFiles/cmTC_670ee.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lemutls_w -lgcc -lquadmath -lm -lemutls_w -lgcc -lSystem -lgcc -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib -no_compact_unwind -rpath @loader_path -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0 -rpath /Users/l22-n04127-res/miniforge3/envs/dev/lib]
+        linker tool for 'Fortran': /Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/ld
+        Library search paths: [;/Users/l22-n04127-res/miniforge3/envs/dev/lib;/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0;/Users/l22-n04127-res/miniforge3/envs/dev/lib;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib]
+        Framework search paths: [;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/]
+        remove lib [System]
+        collapse library dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib]
+        collapse library dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0]
+        collapse library dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/../../..] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib]
+        collapse library dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib]
+        collapse library dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0]
+        collapse library dir [/Users/l22-n04127-res/miniforge3/envs/dev/lib] ==> [/Users/l22-n04127-res/miniforge3/envs/dev/lib]
+        collapse library dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib]
+        collapse framework dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks]
+        implicit libs: [gfortran;emutls_w;gcc;quadmath;m;emutls_w;gcc;gcc]
+        implicit objs: []
+        implicit dirs: [/Users/l22-n04127-res/miniforge3/envs/dev/lib;/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib]
+        implicit fwks: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "/Users/l22-n04127-res/miniforge3/envs/dev/share/cmake-4.0/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Running the Fortran compiler's linker: "/Users/l22-n04127-res/miniforge3/envs/dev/lib/gcc/arm64-apple-darwin20.0.0/13.2.0/ld" "-v"
+      @(#)PROGRAM:ld  PROJECT:ld64-530
+      BUILD 07:38:32 Sep  7 2022
+      configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em (tvOS)
+      LTO support using: LLVM version 14.0.6 (static support for 29, runtime is 29)
+      TAPI support using: TAPI version 11.0.0 (tapi-1100.0.11)
+...

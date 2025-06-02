@@ -1,0 +1,20 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# Find required dependencies
+find_dependency(PkgConfig REQUIRED)
+
+# Find ESMF
+find_package(ESMF QUIET)
+if(NOT ESMF_FOUND)
+    pkg_check_modules(ESMF REQUIRED esmf)
+endif()
+
+# Find NetCDF-Fortran
+pkg_check_modules(NETCDF_FORTRAN REQUIRED netcdf-fortran)
+
+# Include the targets file
+include("${CMAKE_CURRENT_LIST_DIR}/esmfiow-targets.cmake")
+
+check_required_components(esmfiow)

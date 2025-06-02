@@ -8,6 +8,13 @@ on:
     branches: [ main, develop ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+  pages: write
+  id-token: write
+
 env:
   # Build configuration
   CMAKE_BUILD_TYPE: Release
@@ -86,23 +93,19 @@ jobs:
       with:
         fetch-depth: 0  # Full history for version info
         
-    - name: Cache Software Stack
+    - name: Cache ESMF Installation
       uses: actions/cache@v4
       id: software-cache
       with:
         path: |
-          ~/software-install
-          ~/mpi-install
-          ~/hdf5-install
-          ~/netcdf-install
-          ~/esmf-install
-        key: software-stack-v2-ubuntu-latest-gfortran-${{ runner.os }}
+          ~/.esmf-cache
+        key: esmf-action-v1-${{ runner.os }}-${{ matrix.build-type }}
         restore-keys: |
-          software-stack-v2-ubuntu-latest-gfortran-
+          esmf-action-v1-${{ runner.os }}-
           
     - name: Install Base Dependencies
       run: |
-        echo "Installing base build dependencies..."
+        echo "Installing complete software stack from Ubuntu repositories..."
         sudo apt-get update
         sudo apt-get install -y \
           gfortran \
@@ -116,174 +119,36 @@ jobs:
           zlib1g-dev \
           m4 \
           flex \
-          bison
+          bison \
+          libopenmpi-dev \
+          openmpi-bin \
+          openmpi-common \
+          libhdf5-openmpi-dev \
+          libnetcdf-dev \
+          libnetcdff-dev \
+          netcdf-bin \
+          hdf5-tools
           
-    - name: Build Software Stack
-      if: steps.software-cache.outputs.cache-hit != 'true'
-      run: |
-        echo "Building complete software stack from source..."
-        
-        # Set up environment
-        export BUILD_DIR="$HOME/build"
-        export MPI_DIR="$HOME/mpi-install"
-        export HDF5_DIR="$HOME/hdf5-install"
-        export NETCDF_DIR="$HOME/netcdf-install"
-        export ESMF_DIR="$HOME/esmf-install"
-        
-        mkdir -p $BUILD_DIR
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build OpenMPI
-        # ================================================================
-        echo "Building OpenMPI..."
-        OPENMPI_VERSION="4.1.6"
-        wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-${OPENMPI_VERSION}.tar.gz
-        tar -xzf openmpi-${OPENMPI_VERSION}.tar.gz
-        cd openmpi-${OPENMPI_VERSION}
-        
-        ./configure \
-          --prefix=$MPI_DIR \
-          --enable-mpi-fortran \
-          --enable-shared \
-          --disable-static \
-          CC=gcc \
-          CXX=g++ \
-          FC=gfortran
-        make -j$(nproc)
-        make install
-        
-        # Update PATH and environment
-        export PATH=$MPI_DIR/bin:$PATH
-        export LD_LIBRARY_PATH=$MPI_DIR/lib:$LD_LIBRARY_PATH
-        
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build HDF5
-        # ================================================================
-        echo "Building HDF5..."
-        HDF5_VERSION="1.14.3"
-        wget https://github.com/HDFGroup/hdf5/releases/download/hdf5_${HDF5_VERSION//./_}/hdf5-${HDF5_VERSION}.tar.gz
-        tar -xzf hdf5-${HDF5_VERSION}.tar.gz
-        cd hdf5-${HDF5_VERSION}
-        
-        ./configure \
-          --prefix=$HDF5_DIR \
-          --enable-fortran \
-          --enable-parallel \
-          --enable-shared \
-          --disable-static \
-          CC=mpicc \
-          FC=mpifort
-        make -j$(nproc)
-        make install
-        
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build NetCDF-C
-        # ================================================================
-        echo "Building NetCDF-C..."
-        NETCDF_VERSION="4.9.2"
-        wget https://github.com/Unidata/netcdf-c/archive/v${NETCDF_VERSION}.tar.gz
-        tar -xzf v${NETCDF_VERSION}.tar.gz
-        cd netcdf-c-${NETCDF_VERSION}
-        
-        mkdir build && cd build
-        cmake .. \
-          -DCMAKE_INSTALL_PREFIX=$NETCDF_DIR \
-          -DCMAKE_C_COMPILER=mpicc \
-          -DENABLE_HDF5=ON \
-          -DHDF5_ROOT=$HDF5_DIR \
-          -DENABLE_PARALLEL4=ON \
-          -DBUILD_SHARED_LIBS=ON \
-          -DBUILD_STATIC_LIBS=OFF
-        make -j$(nproc)
-        make install
-        
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build NetCDF-Fortran
-        # ================================================================
-        echo "Building NetCDF-Fortran..."
-        NETCDF_FORTRAN_VERSION="4.6.1"
-        wget https://github.com/Unidata/netcdf-fortran/archive/v${NETCDF_FORTRAN_VERSION}.tar.gz
-        tar -xzf v${NETCDF_FORTRAN_VERSION}.tar.gz
-        cd netcdf-fortran-${NETCDF_FORTRAN_VERSION}
-        
-        # Set NetCDF environment
-        export NETCDF=$NETCDF_DIR
-        export LD_LIBRARY_PATH=$NETCDF_DIR/lib:$HDF5_DIR/lib:$LD_LIBRARY_PATH
-        export CPPFLAGS="-I$NETCDF_DIR/include -I$HDF5_DIR/include"
-        export LDFLAGS="-L$NETCDF_DIR/lib -L$HDF5_DIR/lib"
-        
-        ./configure \
-          --prefix=$NETCDF_DIR \
-          --enable-shared \
-          --disable-static \
-          CC=mpicc \
-          FC=mpifort
-        make -j$(nproc)
-        make install
-        
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build ESMF
-        # ================================================================
-        echo "Building ESMF..."
-        ESMF_VERSION="8.6.1"
-        wget https://github.com/esmf-org/esmf/archive/v${ESMF_VERSION}.tar.gz
-        tar -xzf v${ESMF_VERSION}.tar.gz
-        cd esmf-${ESMF_VERSION}
-        
-        # Set ESMF build environment
-        export ESMF_INSTALL_PREFIX=$ESMF_DIR
-        export ESMF_COMM=openmpi
-        export ESMF_COMPILER=gfortran
-        export ESMF_NETCDF=1
-        export ESMF_NETCDF_INCLUDE="$NETCDF_DIR/include"
-        export ESMF_NETCDF_LIBPATH="$NETCDF_DIR/lib"
-        export ESMF_HDF5=1
-        export ESMF_HDF5_INCLUDE="$HDF5_DIR/include"
-        export ESMF_HDF5_LIBPATH="$HDF5_DIR/lib"
-        export ESMF_MPIRUN=mpirun
-        
-        # Build and install ESMF
-        make -j$(nproc)
-        make install
-        
-        echo "Software stack build completed!"
+    - name: Install ESMF
+      uses: esmf-org/install-esmf-action@v1
+      env:
+        ESMF_NETCDF: "nc-config"
+        ESMF_NFCONFIG: "nf-config"
         
     - name: Setup Software Environment
       run: |
-        # Set environment variables for subsequent steps
-        export MPI_DIR="$HOME/mpi-install"
-        export HDF5_DIR="$HOME/hdf5-install"  
-        export NETCDF_DIR="$HOME/netcdf-install"
-        export ESMF_DIR="$HOME/esmf-install"
-        
-        # Update PATH
-        echo "$MPI_DIR/bin" >> $GITHUB_PATH
-        echo "$NETCDF_DIR/bin" >> $GITHUB_PATH
-        
-        # Set library paths
-        echo "LD_LIBRARY_PATH=$MPI_DIR/lib:$HDF5_DIR/lib:$NETCDF_DIR/lib:$ESMF_DIR/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-        
-        # Set compiler environment
+        # Set compiler environment (using MPI wrappers)
         echo "CC=mpicc" >> $GITHUB_ENV
         echo "CXX=mpicxx" >> $GITHUB_ENV  
         echo "FC=mpifort" >> $GITHUB_ENV
         
-        # Set ESMF environment
-        echo "ESMFMKFILE=$ESMF_DIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk" >> $GITHUB_ENV
-        echo "ESMF_ROOT=$ESMF_DIR" >> $GITHUB_ENV
+        # ESMF environment is automatically set by install-esmf-action
+        # The action sets ESMFMKFILE and other ESMF variables
         
-        # Set NetCDF environment
-        echo "NETCDF=$NETCDF_DIR" >> $GITHUB_ENV
-        echo "HDF5_ROOT=$HDF5_DIR" >> $GITHUB_ENV
+        # NetCDF and HDF5 are in system locations
+        echo "NETCDF_ROOT=/usr" >> $GITHUB_ENV
+        echo "HDF5_ROOT=/usr" >> $GITHUB_ENV
+        echo "NetCDF_ROOT=/usr" >> $GITHUB_ENV
         
     - name: Verify Software Installation
       run: |
@@ -299,13 +164,10 @@ jobs:
         mpirun --version
         
         echo "=== Library Versions ==="
-        if [ -f "$NETCDF/bin/nc-config" ]; then
-          echo "NetCDF: $($NETCDF/bin/nc-config --version)"
-        fi
-        
-        if [ -f "$HDF5_ROOT/bin/h5dump" ]; then
-          echo "HDF5: $($HDF5_ROOT/bin/h5dump --version 2>&1 | head -1)"
-        fi
+        echo "NetCDF-C: $(nc-config --version)"
+        echo "NetCDF-Fortran: $(nf-config --version)"
+        echo "HDF5: $(dpkg -l | grep libhdf5 | head -1)"
+        echo "OpenMPI: $(dpkg -l | grep openmpi | head -1)"
         
         echo "=== ESMF Configuration ==="
         if [ -f "$ESMFMKFILE" ]; then
@@ -321,7 +183,8 @@ jobs:
         echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
         echo "CC: $CC"
         echo "FC: $FC"
-        echo "NETCDF: $NETCDF"
+        echo "NETCDF_ROOT: $NETCDF_ROOT"
+        echo "HDF5_ROOT: $HDF5_ROOT"
         
     - name: Build ESMFIOW Library
       run: |
@@ -341,7 +204,7 @@ jobs:
           -DESMFIOW_BUILD_EXAMPLES=ON \
           -DESMFIOW_ENABLE_PARALLEL=ON \
           -DCMAKE_INSTALL_PREFIX=$HOME/esmfiow-install \
-          -DNetCDF_ROOT=$NETCDF \
+          -DNetCDF_ROOT=$NETCDF_ROOT \
           -DHDF5_ROOT=$HDF5_ROOT
           
         # Build library
@@ -426,6 +289,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: code-quality
     
+    # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+    # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -446,12 +315,40 @@ jobs:
         find doc/doxygen/html -name "*.html" | wc -l
         ls -la doc/doxygen/html/
         
-    - name: Upload Documentation
+    - name: Setup Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: actions/configure-pages@v4
+      
+    - name: Upload Documentation (Artifact)
       uses: actions/upload-artifact@v4
       with:
         name: documentation
         path: doc/doxygen/html/
         retention-days: 30
+        
+    - name: Upload to GitHub Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: doc/doxygen/html/
+        
+  # ============================================================================
+  # Deploy to GitHub Pages  
+  # ============================================================================
+  deploy-pages:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: documentation
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
 
   # ============================================================================
   # Performance Benchmarks
@@ -466,23 +363,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Cache Software Stack
-      uses: actions/cache@v4
-      id: software-cache-perf
-      with:
-        path: |
-          ~/software-install
-          ~/mpi-install
-          ~/hdf5-install
-          ~/netcdf-install
-          ~/esmf-install
-        key: software-stack-v2-ubuntu-latest-gfortran-${{ runner.os }}
-        restore-keys: |
-          software-stack-v2-ubuntu-latest-gfortran-
-      
     - name: Install Base Dependencies
       run: |
-        echo "Installing base build dependencies..."
+        echo "Installing complete software stack from Ubuntu repositories..."
         sudo apt-get update
         sudo apt-get install -y \
           gfortran \
@@ -496,174 +379,36 @@ jobs:
           zlib1g-dev \
           m4 \
           flex \
-          bison
+          bison \
+          libopenmpi-dev \
+          openmpi-bin \
+          openmpi-common \
+          libhdf5-openmpi-dev \
+          libnetcdf-dev \
+          libnetcdff-dev \
+          netcdf-bin \
+          hdf5-tools
           
-    - name: Build Software Stack
-      if: steps.software-cache-perf.outputs.cache-hit != 'true'
-      run: |
-        echo "Building complete software stack from source..."
-        
-        # Set up environment
-        export BUILD_DIR="$HOME/build"
-        export MPI_DIR="$HOME/mpi-install"
-        export HDF5_DIR="$HOME/hdf5-install"
-        export NETCDF_DIR="$HOME/netcdf-install"
-        export ESMF_DIR="$HOME/esmf-install"
-        
-        mkdir -p $BUILD_DIR
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build OpenMPI
-        # ================================================================
-        echo "Building OpenMPI..."
-        OPENMPI_VERSION="4.1.6"
-        wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-${OPENMPI_VERSION}.tar.gz
-        tar -xzf openmpi-${OPENMPI_VERSION}.tar.gz
-        cd openmpi-${OPENMPI_VERSION}
-        
-        ./configure \
-          --prefix=$MPI_DIR \
-          --enable-mpi-fortran \
-          --enable-shared \
-          --disable-static \
-          CC=gcc \
-          CXX=g++ \
-          FC=gfortran
-        make -j$(nproc)
-        make install
-        
-        # Update PATH and environment
-        export PATH=$MPI_DIR/bin:$PATH
-        export LD_LIBRARY_PATH=$MPI_DIR/lib:$LD_LIBRARY_PATH
-        
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build HDF5
-        # ================================================================
-        echo "Building HDF5..."
-        HDF5_VERSION="1.14.3"
-        wget https://github.com/HDFGroup/hdf5/releases/download/hdf5_${HDF5_VERSION//./_}/hdf5-${HDF5_VERSION}.tar.gz
-        tar -xzf hdf5-${HDF5_VERSION}.tar.gz
-        cd hdf5-${HDF5_VERSION}
-        
-        ./configure \
-          --prefix=$HDF5_DIR \
-          --enable-fortran \
-          --enable-parallel \
-          --enable-shared \
-          --disable-static \
-          CC=mpicc \
-          FC=mpifort
-        make -j$(nproc)
-        make install
-        
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build NetCDF-C
-        # ================================================================
-        echo "Building NetCDF-C..."
-        NETCDF_VERSION="4.9.2"
-        wget https://github.com/Unidata/netcdf-c/archive/v${NETCDF_VERSION}.tar.gz
-        tar -xzf v${NETCDF_VERSION}.tar.gz
-        cd netcdf-c-${NETCDF_VERSION}
-        
-        mkdir build && cd build
-        cmake .. \
-          -DCMAKE_INSTALL_PREFIX=$NETCDF_DIR \
-          -DCMAKE_C_COMPILER=mpicc \
-          -DENABLE_HDF5=ON \
-          -DHDF5_ROOT=$HDF5_DIR \
-          -DENABLE_PARALLEL4=ON \
-          -DBUILD_SHARED_LIBS=ON \
-          -DBUILD_STATIC_LIBS=OFF
-        make -j$(nproc)
-        make install
-        
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build NetCDF-Fortran
-        # ================================================================
-        echo "Building NetCDF-Fortran..."
-        NETCDF_FORTRAN_VERSION="4.6.1"
-        wget https://github.com/Unidata/netcdf-fortran/archive/v${NETCDF_FORTRAN_VERSION}.tar.gz
-        tar -xzf v${NETCDF_FORTRAN_VERSION}.tar.gz
-        cd netcdf-fortran-${NETCDF_FORTRAN_VERSION}
-        
-        # Set NetCDF environment
-        export NETCDF=$NETCDF_DIR
-        export LD_LIBRARY_PATH=$NETCDF_DIR/lib:$HDF5_DIR/lib:$LD_LIBRARY_PATH
-        export CPPFLAGS="-I$NETCDF_DIR/include -I$HDF5_DIR/include"
-        export LDFLAGS="-L$NETCDF_DIR/lib -L$HDF5_DIR/lib"
-        
-        ./configure \
-          --prefix=$NETCDF_DIR \
-          --enable-shared \
-          --disable-static \
-          CC=mpicc \
-          FC=mpifort
-        make -j$(nproc)
-        make install
-        
-        cd $BUILD_DIR
-        
-        # ================================================================
-        # Build ESMF
-        # ================================================================
-        echo "Building ESMF..."
-        ESMF_VERSION="8.6.1"
-        wget https://github.com/esmf-org/esmf/archive/v${ESMF_VERSION}.tar.gz
-        tar -xzf v${ESMF_VERSION}.tar.gz
-        cd esmf-${ESMF_VERSION}
-        
-        # Set ESMF build environment
-        export ESMF_INSTALL_PREFIX=$ESMF_DIR
-        export ESMF_COMM=openmpi
-        export ESMF_COMPILER=gfortran
-        export ESMF_NETCDF=1
-        export ESMF_NETCDF_INCLUDE="$NETCDF_DIR/include"
-        export ESMF_NETCDF_LIBPATH="$NETCDF_DIR/lib"
-        export ESMF_HDF5=1
-        export ESMF_HDF5_INCLUDE="$HDF5_DIR/include"
-        export ESMF_HDF5_LIBPATH="$HDF5_DIR/lib"
-        export ESMF_MPIRUN=mpirun
-        
-        # Build and install ESMF
-        make -j$(nproc)
-        make install
-        
-        echo "Software stack build completed!"
+    - name: Install ESMF
+      uses: esmf-org/install-esmf-action@v1
+      env:
+        ESMF_NETCDF: "nc-config"
+        ESMF_NFCONFIG: "nf-config"
         
     - name: Setup Software Environment
       run: |
-        # Set environment variables for subsequent steps
-        export MPI_DIR="$HOME/mpi-install"
-        export HDF5_DIR="$HOME/hdf5-install"  
-        export NETCDF_DIR="$HOME/netcdf-install"
-        export ESMF_DIR="$HOME/esmf-install"
-        
-        # Update PATH
-        echo "$MPI_DIR/bin" >> $GITHUB_PATH
-        echo "$NETCDF_DIR/bin" >> $GITHUB_PATH
-        
-        # Set library paths
-        echo "LD_LIBRARY_PATH=$MPI_DIR/lib:$HDF5_DIR/lib:$NETCDF_DIR/lib:$ESMF_DIR/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-        
-        # Set compiler environment
+        # Set compiler environment (using MPI wrappers)
         echo "CC=mpicc" >> $GITHUB_ENV
         echo "CXX=mpicxx" >> $GITHUB_ENV  
         echo "FC=mpifort" >> $GITHUB_ENV
         
-        # Set ESMF environment
-        echo "ESMFMKFILE=$ESMF_DIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk" >> $GITHUB_ENV
-        echo "ESMF_ROOT=$ESMF_DIR" >> $GITHUB_ENV
+        # ESMF environment is automatically set by install-esmf-action
+        # The action sets ESMFMKFILE and other ESMF variables
         
-        # Set NetCDF environment
-        echo "NETCDF=$NETCDF_DIR" >> $GITHUB_ENV
-        echo "HDF5_ROOT=$HDF5_DIR" >> $GITHUB_ENV
+        # NetCDF and HDF5 are in system locations
+        echo "NETCDF_ROOT=/usr" >> $GITHUB_ENV
+        echo "HDF5_ROOT=/usr" >> $GITHUB_ENV
+        echo "NetCDF_ROOT=/usr" >> $GITHUB_ENV
       
     - name: Run Performance Tests
       run: |
@@ -679,7 +424,7 @@ jobs:
           -DCMAKE_CXX_COMPILER=mpicxx \
           -DCMAKE_Fortran_FLAGS='-O3 -march=native' \
           -DESMFIOW_BUILD_EXAMPLES=ON \
-          -DNetCDF_ROOT=$NETCDF \
+          -DNetCDF_ROOT=$NETCDF_ROOT \
           -DHDF5_ROOT=$HDF5_ROOT
           
         make -j$(nproc)
@@ -808,7 +553,7 @@ jobs:
   notify:
     name: Notify Status
     runs-on: ubuntu-latest
-    needs: [build-test, documentation]
+    needs: [build-test, documentation, deploy-pages]
     if: always()
     
     steps:
@@ -835,12 +580,14 @@ jobs:
         - **Code Quality:** ${{ needs.build-test.result == 'success' && 'success' || 'failed' }}
         - **Build & Test:** ${{ needs.build-test.result || 'skipped' }}  
         - **Documentation:** ${{ needs.documentation.result || 'skipped' }}
+        - **GitHub Pages:** ${{ needs.deploy-pages.result || 'skipped' }}
         - **Performance:** ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'included' || 'skipped' }}
         - **Security:** ${{ 'included' }}
         
         ## Artifacts
         - Build artifacts and test results are available in the Actions tab
         - Documentation is generated and available for download
+        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && '- 📚 Live documentation: https://your-username.github.io/ESMFIOW/' || '' }}
         
         ## Next Steps
         - Review any failed jobs and address issues

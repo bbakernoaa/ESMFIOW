@@ -22,31 +22,11 @@ option(BUILD_TESTS "Build tests" ON)
 option(BUILD_DOCS "Build documentation" ON)
 
 # Find required dependencies
-find_package(PkgConfig REQUIRED)
+# Find ESMF using modern CMake approach (following UFS Weather Model pattern)
+find_package(ESMF 8.3.0 MODULE REQUIRED)
 
-# Find ESMF
-find_package(ESMF QUIET)
-if(NOT ESMF_FOUND)
-    # Try using pkg-config
-    pkg_check_modules(ESMF REQUIRED esmf)
-    if(ESMF_FOUND)
-        set(ESMF_LIBRARIES ${ESMF_LIBRARIES})
-        set(ESMF_INCLUDE_DIRS ${ESMF_INCLUDE_DIRS})
-    else()
-        message(FATAL_ERROR "ESMF library not found. Please ensure ESMF is installed and ESMFMKFILE is set.")
-    endif()
-endif()
-
-# Find NetCDF-Fortran
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(NETCDF_FORTRAN REQUIRED netcdf-fortran)
-if(NOT NETCDF_FORTRAN_FOUND)
-    message(FATAL_ERROR "NetCDF-Fortran library not found. Please install netcdf-fortran development package.")
-endif()
-
-# Include directories
-include_directories(${ESMF_INCLUDE_DIRS})
-include_directories(${NETCDF_FORTRAN_INCLUDE_DIRS})
+# Find NetCDF using modern CMake approach (following UFS Weather Model pattern)
+find_package(NetCDF REQUIRED COMPONENTS Fortran)
 
 # Compiler flags
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
@@ -79,19 +59,17 @@ set_target_properties(esmfiow PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
-# Link libraries
+# Link libraries using modern CMake target approach (following UFS Weather Model pattern)
 target_link_libraries(esmfiow PUBLIC
-    ${ESMF_LIBRARIES}
-    ${NETCDF_FORTRAN_LIBRARIES}
+    esmf
+    NetCDF::NetCDF_Fortran
 )
 
-# Include directories for the library
+# Include directories for the library (modern CMake approach)
 target_include_directories(esmfiow PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/modules>
     $<INSTALL_INTERFACE:include>
-    ${ESMF_INCLUDE_DIRS}
-    ${NETCDF_FORTRAN_INCLUDE_DIRS}
 )
 
 # Install targets

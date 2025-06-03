@@ -21,7 +21,7 @@ env:
   CC: gcc
   CXX: g++
   FC: gfortran
-  
+
 jobs:
   # ============================================================================
   # Code Quality and Static Analysis
@@ -29,17 +29,17 @@ jobs:
   code-quality:
     name: Code Quality Checks
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+
     - name: Check file permissions
       run: |
         echo "Checking for executable files that shouldn't be..."
         find . -name "*.f90" -executable -type f || true
         find . -name "*.md" -executable -type f || true
-        
+
     - name: Check line endings
       run: |
         echo "Checking for Windows line endings..."
@@ -47,14 +47,14 @@ jobs:
           echo "ERROR: Found Windows line endings"
           exit 1
         fi
-        
+
     - name: Check for trailing whitespace
       run: |
         echo "Checking for trailing whitespace..."
         if find . -name "*.f90" -o -name "*.md" | xargs grep -l "[[:space:]]$"; then
           echo "WARNING: Found trailing whitespace"
         fi
-        
+
     - name: Validate YAML files
       run: |
         echo "Validating YAML syntax..."
@@ -62,7 +62,7 @@ jobs:
         import yaml
         import sys
         import glob
-        
+
         for file in glob.glob('**/*.yml', recursive=True) + glob.glob('**/*.yaml', recursive=True):
             try:
                 with open(file, 'r') as f:
@@ -80,19 +80,19 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
     needs: code-quality
-    
+
     strategy:
       matrix:
         build-type: [Debug, Release]
         test-suite: [unit, integration, examples]
       fail-fast: false
-      
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0  # Full history for version info
-        
+
     - name: Cache ESMF Installation
       uses: actions/cache@v4
       id: software-cache
@@ -102,7 +102,7 @@ jobs:
         key: esmf-action-v1-${{ runner.os }}-${{ matrix.build-type }}
         restore-keys: |
           esmf-action-v1-${{ runner.os }}-
-          
+
     - name: Install Base Dependencies
       run: |
         echo "Installing complete software stack from Ubuntu repositories..."
@@ -128,47 +128,47 @@ jobs:
           libnetcdff-dev \
           netcdf-bin \
           hdf5-tools
-          
+
     - name: Install ESMF
       uses: esmf-org/install-esmf-action@v1
       env:
         ESMF_NETCDF: "nc-config"
         ESMF_NFCONFIG: "nf-config"
-        
+
     - name: Setup Software Environment
       run: |
         # Set compiler environment (using MPI wrappers)
         echo "CC=mpicc" >> $GITHUB_ENV
-        echo "CXX=mpicxx" >> $GITHUB_ENV  
+        echo "CXX=mpicxx" >> $GITHUB_ENV
         echo "FC=mpifort" >> $GITHUB_ENV
-        
+
         # ESMF environment is automatically set by install-esmf-action
         # The action sets ESMFMKFILE and other ESMF variables
-        
+
         # NetCDF and HDF5 are in system locations
         echo "NETCDF_ROOT=/usr" >> $GITHUB_ENV
         echo "HDF5_ROOT=/usr" >> $GITHUB_ENV
         echo "NetCDF_ROOT=/usr" >> $GITHUB_ENV
-        
+
     - name: Verify Software Installation
       run: |
         echo "Verifying software stack installation..."
-        
+
         echo "=== Compiler Versions ==="
         mpifort --version
         mpicc --version
         mpicxx --version
         cmake --version
-        
+
         echo "=== MPI Configuration ==="
         mpirun --version
-        
+
         echo "=== Library Versions ==="
         echo "NetCDF-C: $(nc-config --version)"
         echo "NetCDF-Fortran: $(nf-config --version)"
         echo "HDF5: $(dpkg -l | grep libhdf5 | head -1)"
         echo "OpenMPI: $(dpkg -l | grep openmpi | head -1)"
-        
+
         echo "=== ESMF Configuration ==="
         if [ -f "$ESMFMKFILE" ]; then
           echo "ESMF makefile found: $ESMFMKFILE"
@@ -177,7 +177,7 @@ jobs:
           echo "ESMF makefile not found at: $ESMFMKFILE"
           find $HOME -name "esmf.mk" 2>/dev/null || echo "No esmf.mk found"
         fi
-        
+
         echo "=== Environment Variables ==="
         echo "PATH: $PATH"
         echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
@@ -185,15 +185,15 @@ jobs:
         echo "FC: $FC"
         echo "NETCDF_ROOT: $NETCDF_ROOT"
         echo "HDF5_ROOT: $HDF5_ROOT"
-        
+
     - name: Build ESMFIOW Library
       run: |
         echo "Building ESMFIOW with ${{ matrix.build-type }} configuration..."
-        
+
         # Create build directory
         mkdir -p build-${{ matrix.build-type }}
         cd build-${{ matrix.build-type }}
-        
+
         # Configure with CMake
         cmake .. \
           -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} \
@@ -206,59 +206,59 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=$HOME/esmfiow-install \
           -DNetCDF_ROOT=$NETCDF_ROOT \
           -DHDF5_ROOT=$HDF5_ROOT
-          
+
         # Build library
         make -j$(nproc) VERBOSE=1
-        
+
         # Install library
         make install
-        
+
         echo "Build completed successfully!"
         ls -la $HOME/esmfiow-install/
-          
+
     - name: Run Unit Tests
       if: matrix.test-suite == 'unit'
       run: |
         echo "Running unit tests..."
         cd build-${{ matrix.build-type }}
-        
+
         echo 'Running unit tests...'
         ctest --output-on-failure --verbose -L unit
-          
+
     - name: Run Integration Tests
       if: matrix.test-suite == 'integration'
       run: |
         echo "Running integration tests..."
         cd build-${{ matrix.build-type }}
-        
+
         echo 'Running integration tests...'
         ctest --output-on-failure --verbose -L integration
-        
+
         echo 'Running complete integration test...'
         if [ -f test/test_complete_integration ]; then
           ./test/test_complete_integration
         fi
-          
+
     - name: Run Examples
       if: matrix.test-suite == 'examples'
       run: |
         echo "Running examples..."
         cd build-${{ matrix.build-type }}
-        
+
         echo 'Running example programs...'
         if [ -f example/example_complete_workflow ]; then
           echo 'Running complete workflow example...'
           ./example/example_complete_workflow
-          
+
           echo 'Checking output files...'
           ls -la *.nc* || echo 'No NetCDF files generated'
         fi
-        
+
         if [ -f example/parallel_compression_example ]; then
           echo 'Running parallel compression example...'
           mpirun -np 2 ./example/parallel_compression_example || echo 'Parallel example failed'
         fi
-          
+
     - name: Upload Test Results
       uses: actions/upload-artifact@v4
       if: always()
@@ -269,7 +269,7 @@ jobs:
           build-${{ matrix.build-type }}/*.nc*
           build-${{ matrix.build-type }}/*.log
         retention-days: 7
-        
+
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
       if: matrix.build-type == 'Release' && matrix.test-suite == 'unit'
@@ -288,63 +288,63 @@ jobs:
     name: Generate Documentation
     runs-on: ubuntu-latest
     needs: code-quality
-    
+
     # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
     # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
     concurrency:
       group: "pages"
       cancel-in-progress: false
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+
     - name: Install Doxygen
       run: |
         sudo apt-get update
         sudo apt-get install -y doxygen graphviz
-        
+
     - name: Generate Documentation
       run: |
         cd doc
         doxygen Doxyfile
-        
+
     - name: Check Documentation
       run: |
         echo "Checking generated documentation..."
         find doc/doxygen/html -name "*.html" | wc -l
         ls -la doc/doxygen/html/
-        
+
     - name: Setup Pages
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: actions/configure-pages@v4
-      
+
     - name: Upload Documentation (Artifact)
       uses: actions/upload-artifact@v4
       with:
         name: documentation
         path: doc/doxygen/html/
         retention-days: 30
-        
+
     - name: Upload to GitHub Pages
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: actions/upload-pages-artifact@v3
       with:
         path: doc/doxygen/html/
-        
+
   # ============================================================================
-  # Deploy to GitHub Pages  
+  # Deploy to GitHub Pages
   # ============================================================================
   deploy-pages:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     needs: documentation
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      
+
     steps:
     - name: Deploy to GitHub Pages
       id: deployment
@@ -358,11 +358,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+
     - name: Install Base Dependencies
       run: |
         echo "Installing complete software stack from Ubuntu repositories..."
@@ -388,32 +388,32 @@ jobs:
           libnetcdff-dev \
           netcdf-bin \
           hdf5-tools
-          
+
     - name: Install ESMF
       uses: esmf-org/install-esmf-action@v1
       env:
         ESMF_NETCDF: "nc-config"
         ESMF_NFCONFIG: "nf-config"
-        
+
     - name: Setup Software Environment
       run: |
         # Set compiler environment (using MPI wrappers)
         echo "CC=mpicc" >> $GITHUB_ENV
-        echo "CXX=mpicxx" >> $GITHUB_ENV  
+        echo "CXX=mpicxx" >> $GITHUB_ENV
         echo "FC=mpifort" >> $GITHUB_ENV
-        
+
         # ESMF environment is automatically set by install-esmf-action
         # The action sets ESMFMKFILE and other ESMF variables
-        
+
         # NetCDF and HDF5 are in system locations
         echo "NETCDF_ROOT=/usr" >> $GITHUB_ENV
         echo "HDF5_ROOT=/usr" >> $GITHUB_ENV
         echo "NetCDF_ROOT=/usr" >> $GITHUB_ENV
-      
+
     - name: Run Performance Tests
       run: |
         echo "Running performance benchmarks..."
-        
+
         # Build optimized version
         mkdir -p build-performance
         cd build-performance
@@ -426,22 +426,22 @@ jobs:
           -DESMFIOW_BUILD_EXAMPLES=ON \
           -DNetCDF_ROOT=$NETCDF_ROOT \
           -DHDF5_ROOT=$HDF5_ROOT
-          
+
         make -j$(nproc)
-        
+
         # Run performance tests
         echo 'Testing compression performance...'
         time ./example/example_complete_workflow
-        
+
         # Analyze output file
         if [ -f climate_data_compressed.nc4 ]; then
           echo 'File size analysis:'
           ls -lh climate_data_compressed.nc4
-          
+
           echo 'NetCDF metadata:'
           ncdump -h climate_data_compressed.nc4 || echo 'ncdump not available'
         fi
-          
+
     - name: Upload Performance Results
       uses: actions/upload-artifact@v4
       with:
@@ -458,11 +458,11 @@ jobs:
     name: Security Scan
     runs-on: ubuntu-latest
     needs: code-quality
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
@@ -470,7 +470,7 @@ jobs:
         scan-ref: '.'
         format: 'sarif'
         output: 'trivy-results.sarif'
-        
+
     - name: Upload Trivy scan results to GitHub Security tab
       uses: github/codeql-action/upload-sarif@v3
       if: always()
@@ -485,57 +485,57 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-test, documentation, performance]
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+
     - name: Download Build Artifacts
       uses: actions/download-artifact@v4
       with:
         name: esmfiow-build-artifacts
         path: ./release-artifacts/
-        
+
     - name: Download Documentation
       uses: actions/download-artifact@v4
       with:
         name: documentation
         path: ./documentation/
-        
+
     - name: Create Release Package
       run: |
         echo "Creating release package..."
         cd release-artifacts
         tar -czf ../esmfiow-${GITHUB_REF#refs/tags/}.tar.gz .
-        
+
         cd ../documentation
         tar -czf ../esmfiow-docs-${GITHUB_REF#refs/tags/}.tar.gz .
-        
+
     - name: Generate Release Notes
       run: |
         echo "Generating release notes..."
         cat > release-notes.md << 'EOF'
         # ESMFIOW Release ${GITHUB_REF#refs/tags/}
-        
+
         ## Features
         - Complete NetCDF4 compression pipeline with ESMF integration
         - Parallel I/O support for high-performance computing
         - CF-compliant metadata handling
         - Comprehensive field and grid operations
-        
+
         ## Build Information
         - Built with GNU Fortran (gfortran) and GNU C/C++ compilers
         - Tested on Ubuntu 22.04 with native software stack (OpenMPI, HDF5, NetCDF, ESMF)
         - Full test suite passed
         - Optimized for performance with -O3 -march=native flags
-        
+
         ## Installation
         Extract the release package and follow the installation guide in the documentation.
-        
+
         ## Documentation
         Complete API documentation is available in the docs package.
         EOF
-        
+
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
@@ -555,7 +555,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-test, documentation, deploy-pages]
     if: always()
-    
+
     steps:
     - name: Determine Status
       run: |
@@ -566,29 +566,29 @@ jobs:
           echo "STATUS=❌ FAILURE" >> $GITHUB_ENV
           echo "MESSAGE=Some CI/CD checks failed. Please review the logs." >> $GITHUB_ENV
         fi
-        
+
     - name: Create Status Summary
       run: |
         cat > $GITHUB_STEP_SUMMARY << EOF
         # ESMFIOW CI/CD Pipeline Summary
-        
+
         **Status:** $STATUS
-        
+
         **Message:** $MESSAGE
-        
+
         ## Job Results
         - **Code Quality:** ${{ needs.build-test.result == 'success' && 'success' || 'failed' }}
-        - **Build & Test:** ${{ needs.build-test.result || 'skipped' }}  
+        - **Build & Test:** ${{ needs.build-test.result || 'skipped' }}
         - **Documentation:** ${{ needs.documentation.result || 'skipped' }}
         - **GitHub Pages:** ${{ needs.deploy-pages.result || 'skipped' }}
         - **Performance:** ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'included' || 'skipped' }}
         - **Security:** ${{ 'included' }}
-        
+
         ## Artifacts
         - Build artifacts and test results are available in the Actions tab
         - Documentation is generated and available for download
         ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && '- 📚 Live documentation: https://your-username.github.io/ESMFIOW/' || '' }}
-        
+
         ## Next Steps
         - Review any failed jobs and address issues
         - Check performance results if this was a main branch push

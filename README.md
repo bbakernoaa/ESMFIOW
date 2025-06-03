@@ -133,61 +133,7 @@ program example
 end program example
 ```
 
-## Docker Development Environment
 
-ESMFIOW includes a complete Docker-based development environment using the NOAA EPIC image, which provides:
-
-- **Intel oneAPI Compilers**: ifort, icc, icpc with optimizations
-- **Scientific Libraries**: Pre-installed ESMF, NetCDF4, HDF5, PNetCDF
-- **MPI Support**: Intel MPI for parallel computing
-- **Build Tools**: CMake, Make, and other development utilities
-
-### Docker Environment Commands
-
-| Command | Description |
-|---------|-------------|
-| `make docker-build` | Build library in Release mode |
-| `make docker-debug` | Build library in Debug mode |
-| `make docker-test` | Run comprehensive test suite |
-| `make docker-shell` | Interactive development shell |
-| `make docker-clean` | Clean build artifacts |
-| `make help` | Show all available targets |
-
-### Development Workflow
-
-1. **Start Development Session**:
-   ```bash
-   # Enter interactive development environment
-   make docker-shell
-   
-   # Inside container, you have access to:
-   # - Intel compilers (ifort, icc, icpc)
-   # - ESMF library with NetCDF support
-   # - All build tools and scientific libraries
-   ```
-
-2. **Build and Test Cycle**:
-   ```bash
-   # Quick debug build and test
-   make docker-debug && make docker-test
-   
-   # Release build
-   make docker-build
-   
-   # Clean rebuild
-   make docker-clean && make docker-build
-   ```
-
-3. **Advanced Docker Usage**:
-   ```bash
-   # Build with specific options
-   ./scripts/docker-build.sh --debug --jobs 8 build
-   
-   # Run specific test categories
-   ./scripts/docker-build.sh test
-   
-   # Pull latest base image
-   ./scripts/docker-build.sh pull
    ```
 
 ### Docker Compose Alternative
